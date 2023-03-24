@@ -10,7 +10,7 @@ export default function Login() {
     const [error, setError] = useState('');
   const handleSubmit = async () => {
     try {
-      const response = await axios.post('http://localhost:8033/api/v1/web/auth/login', {
+      const response = await axios.post('http://cudo.co.id:53948/api/v1/web/auth/login', {
         username: username,
         password: password
       }, {
