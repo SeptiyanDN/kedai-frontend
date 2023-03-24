@@ -1,0 +1,24 @@
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  image: docker:20.10.11
+  services:
+    - docker:20.10.11-dind
+  script:
+    - docker build -t kedaiprogramer/frontend:kedai-frontend .
+    - docker login -u kedaiprogrammer -p Sukses@2023
+    - docker push kedaiprogramer/frontend:kedai-frontend
+
+deploy:
+  stage: deploy
+  image: docker:20.10.11
+  services:
+    - docker:20.10.11-dind
+  script:
+    - docker pull kedaiprogramer/frontend:kedai-frontend
+    - docker stop kedai-frontend || true
+    - docker rm kedai-frontend || true
+    - docker run -d --name kedai-frontend -p 3000:3000 kedaiprogramer/frontend:kedai-frontend
